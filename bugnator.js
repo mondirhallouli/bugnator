@@ -5,8 +5,6 @@ const path = require('path')
 const session = require('express-session')
 // smart user middleware
 const smartUser = require('./middleware/smartUserMiddleware')
-// validate login middleware
-const { checkLogin } = require('./middleware/checkLogin')
 
 // REQUESTS HANDLERS
 const getHandlers = require('./handlers/getHandlers')
@@ -21,7 +19,7 @@ const { projectsRouter } = require('./routes/projectsRouter')
 const port = process.env.PORT || 3000
 
 // MONGODB CREDENTIALS
-const USER = process.env.USER
+const USER = process.env.DBUSER
 const PASSWORD = process.env.PASSWORD
 
 // session secret property value
@@ -46,7 +44,7 @@ mongoose.connect(dblink)
 
 // session parameters
 let sessOptions = {
-  name: "session",
+  name: "bugnator user session",
   secret: SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
@@ -55,7 +53,7 @@ let sessOptions = {
   }
 }
 
-// production environment options
+// production environment session cookie options
 if (app.get('env') === 'production') {
   app.set('trust proxy', 1) // trust first proxy
   sessOptions.cookie.secure = true // serve secure cookie
@@ -88,6 +86,7 @@ app.use(express.urlencoded({ extended: false }))
 // smart user middleware
 app.use(smartUser)
 
+
 /* ========{ HTTP REQUESTS }======== */
 
 // redirecting to login
@@ -104,10 +103,6 @@ app.post('/register', postHandlers.handleRegister)
 
 // logging in users
 app.post('/login', postHandlers.handleLogin)
-
-// adding new projects to the database
-// TODO: move this to the projects router
-app.post('/new-project', checkLogin, postHandlers.addProject)
 
 // logging out users
 app.get('/logout', getHandlers.logoutHandler)
