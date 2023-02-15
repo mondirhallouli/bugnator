@@ -1,4 +1,3 @@
-const { default: mongoose } = require("mongoose")
 const Project = require("../models/project")
 const User = require("../models/user")
 
@@ -11,22 +10,22 @@ const handleRegister = (req, res) => {
 }
 
 const handleRoot = (req, res) => {
-  if (!(req.session && req.session.userId)) return res.redirect('/login')
+  if (!req.user) return res.redirect('/login') // FIXME: changed from "if (!(req.session && req.session.userId))"
   res.redirect('/dashboard')
 }
 
 const handleDashboard = (req, res, next) => {
   // require user to login if not already
-  if (!(req.session && req.session.userId)) return res.redirect('/login') // TODO: change this to check for the req.user instead
+  if (!(req.session && req.session.userId)) return res.redirect('/login') // DEBUG: check if this can use the req.user object to validate instead of the req.session
 
-  User.findById(req.session.userId, (err, user) => { // TODO: this needs to be removed and the req.user needs to be used instead
+  User.findById({ _id: req.session.userId }, (err, user) => { // DEBUG: check if this can be changed to use the req.user object set by the smartUserMiddleware
     if (err) return next(err)
 
     if (!user) {
       return res.redirect('/login')
     }
 
-    // TODO: this needs to stay and use the res.locals.user instead of req.projects & user.[property]
+    // FIXME: this needs to stay and use the res.locals.user instead of req.projects & user.[property]
     res.render('dashboard', { role: user.role, username: user.username, projects: req.projects, members: req.members })
   })
 }
@@ -38,7 +37,7 @@ const logoutHandler = (req, res) => {
 
 // rendering the add new project view
 const addProjectHandler = (req, res) => {
-  res.render('addProject', { role: req.session.role, username: req.session.username })
+  res.render('addProject', res.locals.user) // FIXME: replaced { role: req.session.role, username: req.session.username } with res.locals.user
 }
 
 
@@ -49,7 +48,8 @@ const projectDetails = (req, res) => {
   Project.findById(projectId, (err, doc) => {
     if (err) throw new Error(err.message)
 
-    res.render('projectDetails', { pTitle: doc.title, pDesc: doc.description, username: req.session.username, role: req.session.role })
+    // FIXME: changed the locals username & role to use req.user instead of req.session
+    res.render('projectDetails', { pTitle: doc.title, pDesc: doc.description, username: req.user.username, role: req.user.role })
   })
 }
 
