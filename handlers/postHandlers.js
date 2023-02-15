@@ -34,7 +34,7 @@ const handleRegister = (req, res) => {
 
 const handleLogin = (req, res) => {
   // lookup the user in the database, using the username or email
-  User.findOne({ $or: [{ username: req.body.username }, { email: req.body.email }] }, (err, user) => {
+  User.findOne({ email: req.body.email }, (err, user) => {
     // if the user is not found or password doesn't match, stay on the login and display an error
     if (!user || !bcrypt.compareSync(req.body.password, user.password)) {
       return res.render('login', { warning: 'the username or password is incorrect' })
