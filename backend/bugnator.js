@@ -19,8 +19,8 @@ const { projectsRouter } = require('./routes/projectsRouter')
 const port = process.env.PORT || 3000
 
 // MONGODB CREDENTIALS
-const USER = process.env.DBUSER
-const PASSWORD = process.env.PASSWORD
+// mongodb connection string
+const URI = process.env.URI
 
 // session secret property value
 const SESSION_SECRET = process.env.SESSIONSECRET
@@ -30,12 +30,9 @@ const app = express()
 
 /* ========{ MONGODB / MONGOOSE }======== */
 
-// mongodb connection string
-const dblink = `mongodb+srv://${USER}:${PASSWORD}@netninjanode.5e5thp0.mongodb.net/clients?retryWrites=true&w=majority`
-
 // connecting to mongodb via mongoose
 mongoose.set('strictQuery', false)
-mongoose.connect(dblink)
+mongoose.connect(URI)
     .then(() => app.listen(port, () => console.log(`live at port ${port}`)))
     .catch(err => console.error(err))
 
