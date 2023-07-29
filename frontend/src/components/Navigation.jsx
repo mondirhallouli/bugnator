@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 
 function Navigation() {
     return (
@@ -8,8 +9,8 @@ function Navigation() {
                 </section>
 
                 <section class="flex items-center justify-between flex-wrap gap-4">
-                    <li><a href="/login" class="transition-all hover:text-blue-500 hover:underline">Login</a></li>
-                    <li><a href="/register" class="transition-all hover:text-blue-500 hover:underline">Register</a></li>
+                    <li><Link to="/" class="transition-all hover:text-blue-500 hover:underline">Login</Link></li>
+                    <li><Link to="/register" class="transition-all hover:text-blue-500 hover:underline">Register</Link></li>
                 </section>
             </ul>
         </nav>
