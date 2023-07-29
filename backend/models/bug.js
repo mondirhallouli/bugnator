@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 
-const projectSchema = new Schema({
+const bugSchema = new Schema({
     title: {
         type: String,
         required: true,
@@ -10,13 +10,14 @@ const projectSchema = new Schema({
         type: String,
         required: true,
     },
-    bugs: {
-        type: [mongoose.Types.ObjectId],
-        ref: 'bugs',
-        required: false,
-    }
+    comments: [
+        {
+            type: mongoose.Types.ObjectId,
+            ref: 'comments'
+        },
+    ]
 }, { timestamps: true })
 
-const Project = mongoose.model('Project', projectSchema)
+const Bug = mongoose.model('Bug', bugSchema)
 
-module.exports = Project
+module.exports = { Bug }
