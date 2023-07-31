@@ -23,7 +23,7 @@ const userSchema = new Schema({
     startedAt: {
         type: Date,
         immutable: true,
-        default: () => Date.now(),
+        default: Date.now(),
     }
 }, { timestamps: true })
 

@@ -10,14 +10,13 @@ const bugSchema = new Schema({
         type: String,
         required: true,
     },
-    comments: [
-        {
-            type: mongoose.Types.ObjectId,
-            ref: 'comments'
-        },
-    ]
+    comments: {
+        type: [mongoose.Types.ObjectId],
+        ref: 'comments',
+        required: false
+    }
 }, { timestamps: true })
 
 const Bug = mongoose.model('Bug', bugSchema)
 
-module.exports = { Bug }
+module.exports = Bug 

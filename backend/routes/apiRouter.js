@@ -1,10 +1,11 @@
 const express = require('express')
 const Project = require('../models/project')
 const Bug = require('../models/bug')
+const { checkLogin } = require('../middleware/checkLogin')
 const apiRouter = express.Router()
 
 // FETCH ALL PROJECTS
-apiRouter.get('/projects', (req, res) => {
+apiRouter.get('/projects', checkLogin, (req, res) => {
     async function getProjects() {
         try {
             const projects = await Project.find({})
@@ -19,7 +20,7 @@ apiRouter.get('/projects', (req, res) => {
 // I migh need a separate path to fetch a project's related bugs
 
 // FETCH A SINGLE PROJECT
-apiRouter.get('/projects/:id', (req, res) => {
+apiRouter.get('/projects/:id', checkLogin, (req, res) => {
     const { id } = req.params
 
     async function getProjectDetails() {
@@ -34,7 +35,7 @@ apiRouter.get('/projects/:id', (req, res) => {
 })
 
 // FETCH A SINGLE BUG REPORT
-apiRouter.get('/bugs/:id', (req, res) => {
+apiRouter.get('/bugs/:id', checkLogin, (req, res) => {
     const { id } = req.params
 
     async function getBugDetails() {

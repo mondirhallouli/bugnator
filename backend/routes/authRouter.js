@@ -3,12 +3,16 @@ const bcrypt = require('bcrypt')
 const User = require('../models/user')
 const Project = require('../models/project')
 const Bug = require('../models/bug')
+const { checkLogin } = require('../middleware/checkLogin')
 const authRouter = express.Router()
 
 // REGISTER NEW USER
 authRouter.post('/register', (req, res) => {
+    // generate salt
+    const saltRounds = 14
+    const salt = bcrypt.genSaltSync(saltRounds)
     // hash the user password
-    let hashPass = bcrypt.hashSync(req.body.password, 14)
+    let hashPass = bcrypt.hashSync(req.body.password, saltRounds)
     // replace plain password with the hashed one
     req.body.password = hashPass
 
@@ -49,7 +53,7 @@ authRouter.post('/login', (req, res) => {
         req.session.username = user.username
 
         // redirect the user to the dashboard
-        // res.redirect('/dashboard')
+        res.send({ seshCookie: req.session })
     })
 
     // TODO: make the lookup with the email optional in the findOne parameters of mongodb ✅
@@ -59,36 +63,38 @@ authRouter.post('/login', (req, res) => {
 })
 
 // ADD A PROJECT
-// FIXME: user is logged out because of the check login middleware called before this handler in the main file (bugnator)
-authRouter.post('/projects/create', (req, res) => {
-    const { title, description } = req.body
+authRouter.post('/projects/create', checkLogin, (req, res) => {
 
-    async function createProject({ title, desc }) {
+    async function createProject({ title, description }) {
         try {
-            const result = await Project.create({ title, desc })
+            const result = await Project.create({ title, description })
             res.json(result)
         } catch (error) {
-            console.log(error.messag)
+            console.log("failed to get create a project |", error.message)
         }
     }
 
-    createProject({ title, description })
+    createProject(req.body)
 })
 
 
 // REPORT A BUG
-authRouter.post('/bugs/report', (req, res) => {
-    const { title, description } = req.body
+authRouter.post('/projects/:id/report', checkLogin, (req, res) => {
+    const { id } = req.params
 
-    async function reportBug({ title, desc }) {
+    async function reportBug({ title, description }, projectId) {
         try {
-            const result = await Bug.create({ title, desc })
-            res.json(result)
+            const bug = await Bug.create({ title, description })
+            const project = await Project.findById(projectId)
+            project.bugs.push(bug._id)
+            await project.save()
+
+            res.json({ project })
         } catch (error) {
-            console.log(error.message)
+            console.log("failed to create a new bug report |", error.message)
         }
     }
-    reportBug({ title, description })
+    reportBug(req.body, id)
 })
 
 module.exports = { authRouter }
