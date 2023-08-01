@@ -34,8 +34,6 @@ authRouter.post('/register', (req, res) => {
         .catch(err => {
             res.send({ error: err.message })
         })
-
-    // TODO: add a session cookie after the user successfully registers ✅
 })
 
 // LOGIN USER
@@ -52,14 +50,9 @@ authRouter.post('/login', (req, res) => {
         req.session.userRole = user.role
         req.session.username = user.username
 
-        // redirect the user to the dashboard
-        res.send({ seshCookie: req.session })
+        // send the user a message of successfull login
+        res.redirect("/dashboard")
     })
-
-    // TODO: make the lookup with the email optional in the findOne parameters of mongodb ✅
-    // TODO: add an error message to the login page in case of unsuccessful login ✅
-    // TODO: hash passwords before sending them to the database ✅
-    // TODO: add handler for logout ✅
 })
 
 // LOG USERS OUT 

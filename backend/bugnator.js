@@ -28,6 +28,10 @@ const SESSION_SECRET = process.env.SESSIONSECRET
 const app = express()
 
 
+// CORS for development
+const cors = require('cors')
+app.use(cors())
+
 /* ========{ MONGODB / MONGOOSE }======== */
 
 // connecting to mongodb via mongoose
@@ -64,10 +68,10 @@ app.use(session(sessOptions))
 
 
 // decoding the url information
-// app.use(express.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: false }))
 
 // parse incoming requests with json payloads
-app.use(express.json())
+// app.use(express.json())
 
 // smart user middleware
 app.use(smartUser)

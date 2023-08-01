@@ -17,5 +17,8 @@
         "express-session": "^1.17.3",
         "mongodb": "^5.7.0",
         "mongoose": "^6.8.2"
+    },
+    "devDependencies": {
+        "cors": "^2.8.5"
     }
 }
