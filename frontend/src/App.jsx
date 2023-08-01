@@ -3,6 +3,7 @@ import Navigation from "./components/Navigation"
 import DashNav from "./components/DashNav"
 import Login from "./components/Login"
 import Register from "./components/Register"
+import Dashboard from "./components/Dashboard"
 import { Route, Routes } from "react-router-dom"
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
             <Routes>
                 <Route path='/' element={<Login />} />
                 <Route path='/register' element={<Register />} />
+                <Route path='/dashboard' element={<Dashboard />} />
             </Routes>
         </div>
     )
