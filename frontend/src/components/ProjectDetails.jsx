@@ -2,11 +2,11 @@
 function ProjectDetails() {
     return (
 
-        <div class="">
-            <h2 class="">
+        <div className="">
+            <h2 className="">
                 {"Project Title #1"}
             </h2>
-            <p class="">
+            <p className="">
                 {"Project Description #1"}
             </p>
         </div>
