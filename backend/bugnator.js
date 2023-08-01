@@ -3,6 +3,8 @@ const express = require('express')
 const mongoose = require('mongoose')
 // const path = require('path')
 const session = require('express-session')
+// connect-mongo session store
+const MongoStore = require('connect-mongo')
 // smart user middleware
 const smartUser = require('./middleware/smartUserMiddleware')
 
@@ -39,12 +41,15 @@ mongoose.connect(URI)
 
 // session parameters
 let sessOptions = {
+    store: MongoStore.create({
+        mongoUrl: "mongodb+srv://hallmon:Mh37177379@netninjanode.5e5thp0.mongodb.net/sessionStore?retryWrites=true&w=majority"
+    }),
     name: "bugnator user session",
     secret: SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
-        maxAge: 60 * 60 * 1000, // 1 hour
+        maxAge: 60 * 1000, // 1 minute
     }
 }
 

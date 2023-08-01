@@ -62,6 +62,12 @@ authRouter.post('/login', (req, res) => {
     // TODO: add handler for logout ✅
 })
 
+// LOG USERS OUT 
+authRouter.get('/logout', (req, res) => {
+    req.session.destroy()
+    res.send({ msg: "you have been logged out!" })
+})
+
 // ADD A PROJECT
 authRouter.post('/projects/create', checkLogin, (req, res) => {
 
