@@ -1,5 +1,5 @@
 
-function Register() {
+function RegisterPage() {
     return (
         <div classNameName="">
 
@@ -35,4 +35,4 @@ function Register() {
     )
 }
 
-export default Register
+export default RegisterPage

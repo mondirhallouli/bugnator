@@ -1,5 +1,5 @@
 
-function Dashboard() {
+function DashboardPage() {
     return (
 
         <div className="">
@@ -21,4 +21,4 @@ function Dashboard() {
     )
 }
 
-export default Dashboard
+export default DashboardPage

@@ -21,6 +21,7 @@ const port = process.env.PORT || 3000
 // MONGODB CREDENTIALS
 // mongodb connection string
 const URI = process.env.DB_URI
+const SESH_URI = process.env.DB_SESH_URI
 
 // session secret property value
 const SESSION_SECRET = process.env.SESSIONSECRET
@@ -46,7 +47,7 @@ mongoose.connect(URI)
 // session parameters
 let sessOptions = {
     store: MongoStore.create({
-        mongoUrl: "mongodb+srv://hallmon:Mh37177379@netninjanode.5e5thp0.mongodb.net/sessionStore?retryWrites=true&w=majority"
+        mongoUrl: SESH_URI
     }),
     name: "bugnator user session",
     secret: SESSION_SECRET,

@@ -1,5 +1,5 @@
 
-function ProjectDetails() {
+function ProjectDetailsPage() {
     return (
 
         <div className="">
@@ -13,4 +13,4 @@ function ProjectDetails() {
     )
 }
 
-export default ProjectDetails
+export default ProjectDetailsPage

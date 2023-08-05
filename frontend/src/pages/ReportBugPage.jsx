@@ -1,9 +1,8 @@
-
-function AddProject() {
+function ReportBugPage() {
     return (
         <div className="">
 
-            <h1 class="font-semibold text-2xl text-zinc-600 text-center mb-4 mt-16">Add new project</h1>
+            <h1 class="font-semibold text-2xl text-zinc-600 text-center mb-4 mt-16">Report Bug</h1>
 
             <form action="projects/new-project" method="post"
                 className="w-3/4 max-w-lg mx-auto border rounded border-blue-500 p-4 relative">
@@ -25,4 +24,4 @@ function AddProject() {
     )
 }
 
-export default AddProject
+export default ReportBugPage
