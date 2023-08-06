@@ -51,7 +51,7 @@ authRouter.post('/login', (req, res) => {
         req.session.username = user.username
 
         // send the user a message of successfull login
-        res.redirect("/dashboard")
+        res.json(req.session)
     })
 })
 

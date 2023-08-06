@@ -1,10 +1,12 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { userContext } from "../contexts/userContext"
 
 function LoginPage() {
     const [formData, setFormData] = useState({
         email: '',
         password: ''
     })
+    const [userData, setUserData] = useState(null)
 
     function handleSubmit(event) {
         event.preventDefault()
@@ -22,6 +24,7 @@ function LoginPage() {
 
         response.then(res => {
             if (res.status === 200) {
+                setUserData(res.data)
                 // redirect to success page
                 window.location.href = '/dashboard'
             }

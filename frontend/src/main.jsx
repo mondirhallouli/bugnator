@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+// LAYOUT
 import AppLayout from './layouts/AppLayout.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
@@ -11,6 +12,8 @@ import AddProjectPage from './pages/AddProjectPage.jsx'
 import ReportBugPage from './pages/ReportBugPage.jsx'
 import ProjectDetailsPage from './pages/ProjectDetailsPage.jsx'
 import NotFoundPage from './pages/NotFoundPage.jsx'
+// CONTEXTS
+// import { userContext } from './contexts/userContext.jsx'
 
 const router = createBrowserRouter([
     {
